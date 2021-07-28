@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <title>Basic Flask</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>Witaj, świecie</h1>
+{% block title %}Basic Flask{% endblock %}
 
-</body>
-</html>
+{% block page_content %}
+<div class="page-header">
+    <h1>Witaj świecie</h1>
+    <p>Lokalna data i czas: {{moment(current_time).format('LLL') }}</p>
+    <p>To było: {{moment(current_time).fromNow(refresh=True) }}</p>
+</div>
+{% endblock%}
