@@ -5,7 +5,13 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h1>Witaj, {% if name %} {{ name }} {% else %} nieznajomy{% endif %}!</h1>
+    <h1>Witaj,
+        {% if current_user.is_authenticated %}
+            {{ current_user.username }}
+        {% else %}
+            nieznajomy
+        {% endif %}!
+    </h1>
     {% if not known %}
     <p>Miło mi cię poznać!</p>
     {% else %}

@@ -1,0 +1,1 @@
+flask db migrate -m "adding_email_to_users"

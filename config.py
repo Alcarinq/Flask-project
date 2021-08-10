@@ -5,6 +5,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = 'u3iBX4d4gMmoy9VtFDV4'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    FLASKB_ADMIN = 'admin@flaskb.pl'
 
     @staticmethod
     def init_app(app):
