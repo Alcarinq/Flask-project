@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Basic Flask - Rejestracja{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>
+        Witaj, {{ current_user.username }}!
+    </h1>
+    <h3>Nie potwierdziłes jeszcze swojego konta</h3>
+    <p>
+        Aby uzyskać dostęp musisz skontaktować się z administratorem strony
+    </p>
+</div>
+{% endblock %}
