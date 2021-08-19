@@ -1,5 +1,7 @@
 import unittest
+
 from app.models import User, AnonymousUser, Permission
+
 
 class UserModelTestCase(unittest.TestCase):
     def setUp(self):

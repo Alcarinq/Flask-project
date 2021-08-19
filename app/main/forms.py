@@ -1,17 +1,21 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, Email, Regexp, ValidationError
+
 from ..models import User, Role
+
 
 class NameForm(FlaskForm):
     name = StringField('Jak masz na imię?', validators=[DataRequired()])
     submit = SubmitField('Wyślij')
 
+
 class EditProfileForm(FlaskForm):
-    name = StringField('Prawidziwe imię', validators=[Length(0,64)])
+    name = StringField('Prawdziwe imię', validators=[Length(0, 64)])
     location = StringField('Lokalizacja', validators=[Length(0, 64)])
     about_me = TextAreaField('O mnie')
     submit = SubmitField('Wyślij')
+
 
 class EditProfileAdminForm(FlaskForm):
     email = StringField('E-mail', validators=[DataRequired(), Length(1, 64), Email()])
@@ -24,7 +28,7 @@ class EditProfileAdminForm(FlaskForm):
 
     confirmed = BooleanField('Potwierdzony')
     role = SelectField('Rola', coerce=int)
-    name = StringField('Prawidziwe imię', validators=[Length(0, 64)])
+    name = StringField('Prawdziwe imię', validators=[Length(0, 64)])
     location = StringField('Lokalizacja', validators=[Length(0, 64)])
     about_me = TextAreaField('O mnie')
     submit = SubmitField('Wyślij')
@@ -41,3 +45,8 @@ class EditProfileAdminForm(FlaskForm):
     def validate_username(self, field):
         if field.data != self.user.username and User.query.filter_by(username=field.data).first():
             raise ValidationError('Ta nazwa użytkownika jest już używana.')
+
+
+class PostForm(FlaskForm):
+    body = TextAreaField("Co chcesz dzisiaj napisać?", validators=[DataRequired()])
+    submit = SubmitField('Wyślij')

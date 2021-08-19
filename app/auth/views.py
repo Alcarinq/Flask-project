@@ -1,9 +1,11 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
+
 from . import auth
+from .forms import LoginForm, RegistrationForm
 from .. import db
 from ..models import User
-from .forms import LoginForm, RegistrationForm
+
 
 @auth.before_app_request
 def before_request():
@@ -22,6 +24,7 @@ def unconfirmed():
         return redirect(url_for('main.index'))
     else:
         return render_template('auth/unconfirmed.html')
+
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
