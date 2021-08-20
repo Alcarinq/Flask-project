@@ -6,6 +6,7 @@ class Config:
     SECRET_KEY = 'u3iBX4d4gMmoy9VtFDV4'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     FLASKB_ADMIN = 'admin@flaskb.pl'
+    POSTS_PER_PAGE = 10
 
     @staticmethod
     def init_app(app):

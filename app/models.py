@@ -1,9 +1,11 @@
 import hashlib
 from datetime import datetime
 
+import bleach
 from app import db
 from flask import current_app, request
 from flask_login import UserMixin, AnonymousUserMixin
+from markdown import markdown
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import login_manager
@@ -16,9 +18,11 @@ class Permission:
     MODERATE = 8
     ADMIN = 16
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -69,6 +73,7 @@ class Role(db.Model):
             role.default = (role.name == default_role)
             db.session.add(role)
         db.session.commit()
+
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -140,6 +145,16 @@ class Post(db.Model):
     body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    body_html = db.Column(db.Text)
+
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blackquote', 'code', 'em', 'i',
+                        'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p']
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True
+        ))
 
 
 class AnonymousUser(AnonymousUserMixin):
@@ -149,4 +164,6 @@ class AnonymousUser(AnonymousUserMixin):
     def is_administrator(self):
         return False
 
+
+db.event.listen(Post.body, 'set', Post.on_changed_body)
 login_manager.anonymous_user = AnonymousUser

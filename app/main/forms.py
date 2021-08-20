@@ -1,3 +1,4 @@
+from flask_pagedown.fields import PageDownField
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, Email, Regexp, ValidationError
@@ -48,5 +49,5 @@ class EditProfileAdminForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    body = TextAreaField("Co chcesz dzisiaj napisać?", validators=[DataRequired()])
+    body = PageDownField("Co chcesz dzisiaj napisać?", validators=[DataRequired()])
     submit = SubmitField('Wyślij')
