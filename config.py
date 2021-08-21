@@ -7,6 +7,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     FLASKB_ADMIN = 'admin@flaskb.pl'
     POSTS_PER_PAGE = 10
+    FOLLOWERS_PER_PAGE = 5
 
     @staticmethod
     def init_app(app):
