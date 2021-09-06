@@ -51,3 +51,7 @@ class EditProfileAdminForm(FlaskForm):
 class PostForm(FlaskForm):
     body = PageDownField("Co chcesz dzisiaj napisać?", validators=[DataRequired()])
     submit = SubmitField('Wyślij')
+
+class CommentForm(FlaskForm):
+    body = StringField("", validators=[DataRequired()])
+    submit = SubmitField('Wyślij')
